@@ -19,9 +19,26 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const upload = multer({ dest: tmpdir(), limits: { fileSize: 500 * 1024 * 1024 } });
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
 const transcripts = new Map();
 const digests = new Map();
 
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    res.set({
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Methods": "GET, POST",
+      "Access-Control-Allow-Headers": "Content-Type",
+      Vary: "Origin",
+    });
+  }
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
 app.use(express.json());
 app.use(express.static(path.join(root, "public")));
 

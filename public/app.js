@@ -1,5 +1,9 @@
 const $ = (id) => document.getElementById(id);
 
+const API_BASE = ["localhost", "127.0.0.1"].includes(location.hostname)
+  ? ""
+  : (document.querySelector('meta[name="api-base"]')?.content || "").replace(/\/$/, "");
+
 const state = {
   mode: "link",
   length: "medium",
@@ -11,7 +15,7 @@ const state = {
 };
 
 async function api(path, options = {}) {
-  const res = await fetch(path, options);
+  const res = await fetch(API_BASE + path, options);
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
   return data;
@@ -96,7 +100,7 @@ function render() {
     ),
   );
 
-  $("r-transcript").href = `/api/transcript/${t.id}.txt`;
+  $("r-transcript").href = `${API_BASE}/api/transcript/${t.id}.txt`;
   $("preview").hidden = true;
   $("result").hidden = false;
   document.querySelector(".layout").classList.add("has-result");

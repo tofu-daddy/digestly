@@ -28,6 +28,7 @@ Then fill in `.env`:
 | `GEMINI_MODEL` | No | Override the summarization model (default `gemini-flash-latest`) |
 | `WHISPER_MODEL` | No | Override the transcription model (default `whisper-1`) |
 | `PORT` | No | Server port (default `5055`) |
+| `ALLOWED_ORIGINS` | No | Comma-separated sites allowed to call the API from a browser, e.g. `https://tofu-daddy.github.io` |
 
 Optional tools, used when installed:
 
@@ -49,3 +50,12 @@ Open http://localhost:5055. Use `npm run dev` to restart automatically on file c
 - Transcripts and digests are cached in memory only and are lost on restart.
 - Spotify links are not supported because Spotify does not expose episode audio. Use the show's RSS feed or Apple Podcasts link instead.
 - Timestamps in sections link straight to that moment for YouTube videos.
+
+## Deploy
+
+The page and the API can live in different places.
+
+- **API on Render.** `render.yaml` describes the service. In Render, create a Blueprint from this repo and fill in `GEMINI_API_KEY` (and `OPENAI_API_KEY` if you want audio transcription).
+- **Page on GitHub Pages.** `.github/workflows/pages.yml` publishes `public/` on every push to `master`. In the repo's Settings, under Pages, set the source to GitHub Actions. Put the Render URL in the `api-base` meta tag in `public/index.html`.
+
+On the free Render plan the API sleeps when idle, so the first request after a while can take about a minute.
