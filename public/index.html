@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Digestly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="/" aria-label="Digestly home">
+          <span class="logo-mark"></span>
+          <span class="logo-text">Digestly</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="hero">
+        <h1>An hour of audio.<br />Two minutes of reading.</h1>
+        <p class="lede">Paste a video or podcast. Get the takeaways.</p>
+
+        <div id="setup-warning" class="notice" hidden></div>
+
+        <form id="form">
+          <div class="tabs" role="tablist" aria-label="Choose a source">
+            <button type="button" class="tab active" data-mode="link" role="tab">Link</button>
+            <button type="button" class="tab" data-mode="file" role="tab">Upload file</button>
+          </div>
+
+          <div class="mode" data-mode="link">
+            <input id="url" type="url" placeholder="YouTube link, podcast episode URL…" autocomplete="off" />
+          </div>
+
+          <div class="mode" data-mode="file" hidden>
+            <label class="drop" id="drop">
+              <input id="file" type="file" accept="audio/*,video/*" />
+              <span id="file-label">Choose or drop an audio/video file</span>
+            </label>
+          </div>
+
+          <div id="episodes" class="episodes" hidden>
+            <label for="episode-select" id="episodes-label">Pick an episode</label>
+            <select id="episode-select"></select>
+          </div>
+
+          <div class="controls">
+            <div class="segmented" role="radiogroup" aria-label="Length">
+              <button type="button" data-length="short">Short</button>
+              <button type="button" data-length="medium" class="active">Medium</button>
+              <button type="button" data-length="detailed">Detailed</button>
+            </div>
+            <button id="submit" type="submit" class="primary">Digest it →</button>
+          </div>
+        </form>
+
+        <p id="status" class="status" hidden></p>
+        <p id="error" class="error" hidden></p>
+      </section>
+
+      <article id="digest" class="digest">
+        <div class="digest-head">
+          <span class="eyebrow">Your digest</span>
+          <span id="d-length" class="digest-length">Medium</span>
+        </div>
+
+        <div id="preview" class="digest-body" aria-hidden="true">
+          <h2>[Episode title]</h2>
+          <section>
+            <h3>## Key takeaways</h3>
+            <div class="skeleton">
+              <div class="sk-row"><span class="dot"></span><span class="bar" style="width: 88%"></span></div>
+              <div class="sk-row"><span class="dot"></span><span class="bar" style="width: 72%"></span></div>
+              <div class="sk-row"><span class="dot"></span><span class="bar" style="width: 80%"></span></div>
+            </div>
+          </section>
+          <section>
+            <h3>## Chapters</h3>
+            <div class="skeleton">
+              <div class="sk-row chapter"><span class="time">00:00</span><span class="bar" style="width: 50%"></span></div>
+              <div class="sk-row chapter"><span class="time">12:40</span><span class="bar" style="width: 62%"></span></div>
+              <div class="sk-row chapter"><span class="time">31:05</span><span class="bar" style="width: 44%"></span></div>
+            </div>
+          </section>
+        </div>
+
+        <div id="result" class="digest-body" hidden>
+          <div>
+            <h2 id="r-title"></h2>
+            <p id="r-meta" class="meta"></p>
+          </div>
+
+          <section>
+            <h3>## Overview</h3>
+            <p id="r-overview" class="prose"></p>
+          </section>
+
+          <section>
+            <h3>## Key takeaways</h3>
+            <ul id="r-takeaways" class="takeaways"></ul>
+          </section>
+
+          <section id="r-quotes-wrap">
+            <h3>## Notable quotes</h3>
+            <div id="r-quotes"></div>
+          </section>
+
+          <section id="r-sections-wrap">
+            <h3>## Chapters</h3>
+            <ol id="r-sections" class="chapters"></ol>
+          </section>
+
+          <footer class="result-foot">
+            <a id="r-transcript" href="#" target="_blank" rel="noopener">View full transcript</a>
+            <button id="copy" type="button" class="ghost">Copy</button>
+          </footer>
+        </div>
+      </article>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

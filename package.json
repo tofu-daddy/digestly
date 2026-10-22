@@ -1,0 +1,22 @@
+{
+  "name": "digest",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Turn a podcast or video into Cliffsnotes-style takeaways.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@google/genai": "^2.30.0",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "fast-xml-parser": "^5.11.2",
+    "multer": "^2.5.0"
+  }
+}
